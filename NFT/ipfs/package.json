@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "File": "^0.10.2",
+    "files-from-path": "^1.0.1",
+    "fs": "^0.0.1-security",
+    "nft.storage": "^7.1.1"
+  }
+}
