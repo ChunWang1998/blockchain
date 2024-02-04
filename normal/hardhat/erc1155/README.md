@@ -4,8 +4,6 @@ npx hardhat compile
 make deploy
 make verify
 ```
-## Opensea
-https://testnets.opensea.io/zh-TW/assets/bsc-testnet/CONTRACT_ADDRESS/0
 
 ## Mint
 - account: receiver

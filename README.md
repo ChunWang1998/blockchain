@@ -1,5 +1,5 @@
 # blockchain
-## tree
+## Tree structure
 ```
 blockchain
 ├── Normal
