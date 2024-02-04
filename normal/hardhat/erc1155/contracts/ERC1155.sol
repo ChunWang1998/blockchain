@@ -5,18 +5,16 @@ import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Supply.sol";
 
-contract TeamUltra is ERC1155, Ownable,ERC1155Supply {
+contract TeamUltra is ERC1155, Ownable, ERC1155Supply {
     uint256 public constant MAX_SUPPLY = 10000;
     mapping(uint256 => uint256) public totalNFTSupply;
-    string public name = "Team Ultra";
-    constructor(address initialOwner)
-        ERC1155("ipfs://bafybeicvazv5jzf2k7gpmxzz4k7g4rxsfdtw54j2ylfbhg3zhcsp7wxxxy/1.json")
-        Ownable(initialOwner)
-    {}
+    string public ipfsString = "ipfs://bafybeicvazv5jzf2k7gpmxzz4k7g4rxsfdtw54j2ylfbhg3zhcsp7wxxxy/1.json";
 
-    function mintNFT(address account, uint256 id, uint256 amount, bytes memory data)
-        public 
-    {
+    string public name = "example name";
+
+    constructor(address initialOwner) ERC1155(ipfsString) Ownable(initialOwner) {}
+
+    function mintNFT(address account, uint256 id, uint256 amount, bytes memory data) public {
         require(totalNFTSupply[id] + amount <= MAX_SUPPLY, "exceed max balance");
         _mint(account, id, amount, data);
         totalNFTSupply[id] += amount;
