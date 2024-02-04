@@ -1,0 +1,18 @@
+{
+  "name": "upgradable-demo-uups",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/ChunWang1998/upgradable-demo-uups.git",
+  "author": "Chunwang1998 <jjooee1998@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@openzeppelin/contracts-upgradeable": "^5.0.0",
+    "@openzeppelin/hardhat-upgrades": "^2.4.3",
+    "dotenv": "^16.3.1",
+    "hardhat": "^2.19.1"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-ethers": "^3.0.5",
+    "@nomicfoundation/hardhat-verify": "^1.1.1"
+  }
+}
