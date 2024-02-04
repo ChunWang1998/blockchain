@@ -1,4 +1,4 @@
-const { contractAddress, contractName } = require("../constant");
+const { contractName } = require("../constant");
 const { ethers } = require("hardhat");
 async function main() {
   const [deployer] = await ethers.getSigners();
@@ -10,7 +10,7 @@ async function main() {
     await deployer.provider.getBalance(deployer.address)
   );
 
-  const Token = await ethers.getContractFactory(contractName); //Replace with name of your smart contract
+  const Token = await ethers.getContractFactory(contractName);
   const token = await Token.deploy(deployer.address);
 
   console.log("contract address:", await token.getAddress());

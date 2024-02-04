@@ -5,7 +5,7 @@ import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Supply.sol";
 
-contract TeamUltra is ERC1155, Ownable, ERC1155Supply {
+contract Erc1155Base is ERC1155, Ownable, ERC1155Supply {
     uint256 public constant MAX_SUPPLY = 10000;
     mapping(uint256 => uint256) public totalNFTSupply;
     string public ipfsString = "ipfs://bafybeicvazv5jzf2k7gpmxzz4k7g4rxsfdtw54j2ylfbhg3zhcsp7wxxxy/1.json";

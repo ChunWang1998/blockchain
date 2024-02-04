@@ -7,10 +7,10 @@ dotenv.config({ path: envFilePath });
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
   solidity: "0.8.20",
-  defaultNetwork: "bsc_testnet",
+  defaultNetwork: "sepolia",
   networks: {
-    bsc_testnet: {
-      url: `https://data-seed-prebsc-1-s1.bnbchain.org:8545`,
+    sepolia: {
+      url: `https://eth-sepolia.g.alchemy.com/v2/lCvj75OmaOo8Bst8BOwDlv4mGyX1LYea`,
       accounts: [process.env.METAMASK_ACCOUNT_PRIVATE_KEY],
     },
   },
