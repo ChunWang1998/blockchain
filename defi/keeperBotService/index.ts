@@ -16,10 +16,3 @@ const keeperBot = new KeeperBotService();
         console.error("Error fetching price for BTC:", error);
     }
 })();
-
-
-
-// 2. liquidate auto check (in every 24 hrs)
-setInterval(async () => {
-    await keeperBot.liquidate();
-}, 24 * 60 * 60 * 1000); 
