@@ -21,39 +21,6 @@ export class Order {
 }
 
 export class KeeperBotService {
-    private orders: Order[] = [];
-    private portfolio: { [key: string]: number } = { 'BTC': 2, 'ETH': 10 };
-
-    addDelayedOrder(order: Order) {
-        this.orders.push(order);
-    }
-
-    async executeDelayedOrders() {
-        for (const order of this.orders) {
-            await this.delay(order.executionTime);
-            console.log(`Executing order for ${order.quantity} ${order.symbol} at ${order.price} at ${new Date().toLocaleString()}`);
-        }
-    }
-
-    async delay(ms: number) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-    }
-
-    async liquidate() {
-        console.log('Performing liquidation...');
-        for (const asset in this.portfolio) {
-            const quantity = this.portfolio[asset];
-            if (quantity > 0) {
-                // The simulated liquidation operation involves selling assets at 50% of the current price.
-                const price = await this.getPrice(asset);
-                const sellAmount = quantity * price * 0.5;
-                console.log(`Sold ${sellAmount} worth of ${asset}`);
-                this.portfolio[asset] -= quantity;
-            }
-        }
-        console.log('Liquidation completed.');
-    }
-
     async getPrice(asset: string): Promise<number> {
         if (Object.keys(priceIds).includes(asset)) {
             //@ts-ignore
