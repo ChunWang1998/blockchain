@@ -1,5 +1,0 @@
-{
-  "dependencies": {
-    "@pythnetwork/pyth-evm-js": "^1.30.0"
-  }
-}
