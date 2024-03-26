@@ -21,6 +21,7 @@ async function functionSelector(contractInstance) {
     "transfer(address,uint256)"
   );
   console.log(selector); //0xa9059cbb
+  //can be used with abi.encodeWithSelector()
 }
 
 (async () => {
