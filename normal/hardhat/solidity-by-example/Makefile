@@ -20,3 +20,6 @@ deploy:
 verify:
 	@read -p "Enter the deployment address (NEW_ADDR): " NEW_ADDR; \
 	npx hardhat verify $$NEW_ADDR
+
+test:
+	npx hardhat test
