@@ -21,9 +21,6 @@ jobs:
       - name: "Install Bun"
         uses: "oven-sh/setup-bun@v1"
 
-      - name: "Install the dependencies"
-        run: "bun install"
-
       - name: "Run tasks in subdirectory"
         run: |  # Note the `working_directory` property
           cd /normal/hardhat/solidity-by-example  # Navigate to subdirectory
