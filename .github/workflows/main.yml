@@ -1,0 +1,48 @@
+name: "CI"
+
+env:
+  HARDHAT_VAR_MNEMONIC: "test test test test test test test test test test test junk"
+  HARDHAT_VAR_INFURA_API_KEY: "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  ci:
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: "Check out the repo"
+        uses: "actions/checkout@v4"
+
+      - name: "Install Bun"
+        uses: "oven-sh/setup-bun@v1"
+
+      - name: "Install the dependencies"
+        run: "bun install"
+
+      - name: "Run tasks in subdirectory"
+        run: |  # Note the `working_directory` property
+          cd /normal/hardhat/solidity-by-example  # Navigate to subdirectory
+          bun install  # Install subdirectory dependencies (if needed)
+          bun run lint  # Replace with your subdirectory tasks
+          # ... other subdirectory tasks
+
+      - name: "Add lint summary"
+        run: |
+          echo "## Lint results" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Passed" >> $GITHUB_STEP_SUMMARY
+
+      - name: "Compile the contracts and generate the TypeChain bindings"
+        run: "bun run typechain"
+
+      - name: "Test the contracts and generate the coverage report"
+        run: "bun run coverage"
+
+      - name: "Add test summary"
+        run: |
+          echo "## Test results" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Passed" >> $GITHUB_STEP_SUMMARY
