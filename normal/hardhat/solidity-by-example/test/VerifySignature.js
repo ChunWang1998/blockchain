@@ -20,13 +20,11 @@ describe("VerifySignature", function () {
       "0x14723a09acff6d2a60dcdf7aa4aff308fddc160c",
       123,
       "coffee and donuts",
-      1
+      1,
     );
 
     // signed off chain
-    const signature = await signer.signMessage(
-      hre.ethers.getBytes(messageHash)
-    );
+    const signature = await signer.signMessage(hre.ethers.getBytes(messageHash));
 
     const verified = await contractInstance.verify(
       signer.address,
@@ -34,7 +32,7 @@ describe("VerifySignature", function () {
       123,
       "coffee and donuts",
       1,
-      signature
+      signature,
     );
 
     // console.log("Signature verified:", verified);

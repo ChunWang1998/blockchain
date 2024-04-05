@@ -26,11 +26,7 @@ describe("MultiSigWallet", function () {
 
     const data = hre.ethers.encodeBytes32String("0x0");
 
-    await contractInstance.submitTransaction(
-      account2,
-      hre.ethers.parseEther("1.0"),
-      data
-    );
+    await contractInstance.submitTransaction(account2, hre.ethers.parseEther("1.0"), data);
 
     await contractInstance.confirmTransaction(0);
 

@@ -16,9 +16,7 @@ describe("FunctionSelector", function () {
   });
 
   it("should get selector successfully", async function () {
-    let selector = await contractInstance.getSelector(
-      "transfer(address,uint256)"
-    );
+    let selector = await contractInstance.getSelector("transfer(address,uint256)");
     expect(selector).to.equal("0xa9059cbb");
     //can be used with abi.encodeWithSelector()
   });

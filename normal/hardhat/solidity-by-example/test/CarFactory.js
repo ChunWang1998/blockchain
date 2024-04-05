@@ -18,14 +18,9 @@ describe("CarFactory", function () {
   it("should create cars and send ethers successfully", async function () {
     await contractInstance.create(signer, "model1");
     expect(await contractInstance.getCar(0)).includes("model1");
-    await contractInstance.create2AndSendEther(
-      signer,
-      "model2",
-      hre.ethers.encodeBytes32String("HelloWorld"),
-      {
-        value: hre.ethers.parseEther("1.0"),
-      }
-    );
+    await contractInstance.create2AndSendEther(signer, "model2", hre.ethers.encodeBytes32String("HelloWorld"), {
+      value: hre.ethers.parseEther("1.0"),
+    });
     expect(await contractInstance.getCar(1)).includes("model2");
   });
 });
