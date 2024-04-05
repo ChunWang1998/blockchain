@@ -23,10 +23,9 @@ jobs:
 
       - name: "Run tasks in subdirectory"
         run: |  # Note the `working_directory` property
-          cd /normal/hardhat/solidity-by-example  # Navigate to subdirectory
+          cd normal/hardhat/solidity-by-example  # Navigate to subdirectory
           bun install  # Install subdirectory dependencies (if needed)
           bun run lint  # Replace with your subdirectory tasks
-          # ... other subdirectory tasks
 
       - name: "Add lint summary"
         run: |
