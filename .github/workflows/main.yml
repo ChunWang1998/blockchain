@@ -33,7 +33,7 @@ jobs:
           echo "✅ Passed" >> $GITHUB_STEP_SUMMARY
 
       - name: "Compile the contracts and generate the TypeChain bindings"
-        run: "bun run typechain"
+        run: "bun run typechain:compile"
 
       - name: "Test the contracts and generate the coverage report"
         run: "bun run coverage"
