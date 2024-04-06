@@ -19,7 +19,7 @@ describe("MultiSigWallet", function () {
   });
 
   it("should execute tx successfully", async function () {
-    const tx = await signer.sendTransaction({
+    await signer.sendTransaction({
       to: contractInstance.target,
       value: hre.ethers.parseEther("1.0"),
     });
@@ -27,8 +27,17 @@ describe("MultiSigWallet", function () {
     const data = hre.ethers.encodeBytes32String("0x0");
 
     await contractInstance.submitTransaction(account2, hre.ethers.parseEther("1.0"), data);
+    const [to] = await contractInstance.getTransaction(0);
+    expect(to).to.equal(account2);
 
-    await contractInstance.confirmTransaction(0);
+    await expect(contractInstance.confirmTransaction(0))
+      .to.emit(contractInstance, "ConfirmTransaction")
+      .withArgs(signer.address, 0); // Check ConfirmTransaction event
+    const transaction = await contractInstance.getTransaction(0);
+
+    expect(transaction[4]).to.equal(1); // Check confirmation count
+    const isConfirmed = await contractInstance.isConfirmed(0, signer.address);
+    expect(isConfirmed).to.equal(true); // Check confirmation by signer
 
     //await contractInstance.executeTransaction(0);
     //fail

@@ -31,6 +31,7 @@
     "solhint": "^4.5.2"
   },
   "scripts": {
+    "test": "hardhat test",
     "type": "cross-env TS_NODE_TRANSPILE_ONLY=true hardhat typechain",
     "clean": "rimraf ./artifacts ./cache ./coverage ./types ./coverage.json && bun run typechain",
     "lint": "bun run lint:sol && bun run prettier:check && bun run prettier:write",
