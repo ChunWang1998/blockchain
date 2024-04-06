@@ -21,19 +21,11 @@ jobs:
       - name: "Install Bun"
         uses: "oven-sh/setup-bun@v1"
 
-      - name: "Run tasks in subdirectory"
-        run: |  
-          cd normal/hardhat/solidity-by-example  
-          bun install  
-          bun run lint  
 
-      - name: "Add lint summary"
-        run: |
-          echo "## Lint results" >> $GITHUB_STEP_SUMMARY
-          echo "✅ Passed" >> $GITHUB_STEP_SUMMARY
+      - name: "Install dependencies and run lint"
+        run: bun install && bun run lint
+        working-directory: normal/hardhat/solidity-by-example  
 
-      - name: "Compile the contracts and generate the TypeChain bindings"
-        run: "bun run typechain:compile"
-
-      - name: "Test the contracts and generate the coverage report"
-        run: "bun run coverage"
+      - name: "Generate TypeChain bindings (using defined script)"  
+        run: bun run type 
+        working-directory: normal/hardhat/solidity-by-example   

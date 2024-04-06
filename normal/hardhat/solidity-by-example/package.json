@@ -31,11 +31,11 @@
     "solhint": "^4.5.2"
   },
   "scripts": {
+    "type": "cross-env TS_NODE_TRANSPILE_ONLY=true hardhat typechain",
     "clean": "rimraf ./artifacts ./cache ./coverage ./types ./coverage.json && bun run typechain",
     "lint": "bun run lint:sol && bun run prettier:check && bun run prettier:write",
     "lint:sol": "solhint --max-warnings 0 \"contracts/**/*.sol\"",
     "prettier:check": "prettier --check \"**/*.{js,json,md,sol,ts,yml}\"",
-    "prettier:write": "prettier --write \"**/*.{js,json,md,sol,ts,yml}\"",
-    "typechain:compile": "cross-env TS_NODE_TRANSPILE_ONLY=true hardhat typechain"
+    "prettier:write": "prettier --write \"**/*.{js,json,md,sol,ts,yml}\""
   }
 }
