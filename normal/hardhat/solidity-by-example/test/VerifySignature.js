@@ -23,8 +23,12 @@ describe("VerifySignature", function () {
       1,
     );
 
+    expect(messageHash).to.equal("0xcf36ac4f97dc10d91fc2cbb20d718e94a8cbfe0f82eaedc6a4aa38946fb797cd");
+
     // signed off chain
     const signature = await signer.signMessage(hre.ethers.getBytes(messageHash));
+    const anotherSignature = await account1.signMessage(hre.ethers.getBytes(messageHash));
+    expect(signature).to.not.equal(anotherSignature);
 
     const verified = await contractInstance.verify(
       signer.address,
@@ -35,6 +39,6 @@ describe("VerifySignature", function () {
       signature,
     );
 
-    // console.log("Signature verified:", verified);
+    expect(verified).to.equal(true);
   });
 });
