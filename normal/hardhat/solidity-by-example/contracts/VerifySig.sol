@@ -16,11 +16,11 @@ How to Sign and Verify
 */
 
 contract VerifySignature {
-    /* 1. Unlock MetaMask account
+  /* 1. Unlock MetaMask account
     ethereum.enable()
     */
 
-    /* 2. Get message hash to sign
+  /* 2. Get message hash to sign
     getMessageHash(
         0x14723A09ACff6D2A60DcdF7aA4AFf308FDDC160C,
         123,
@@ -30,15 +30,16 @@ contract VerifySignature {
 
     hash = "0xcf36ac4f97dc10d91fc2cbb20d718e94a8cbfe0f82eaedc6a4aa38946fb797cd"
     */
-    function getMessageHash(address _to, uint256 _amount, string memory _message, uint256 _nonce)
-        public
-        pure
-        returns (bytes32)
-    {
-        return keccak256(abi.encodePacked(_to, _amount, _message, _nonce));
-    }
+  function getMessageHash(
+    address _to,
+    uint256 _amount,
+    string memory _message,
+    uint256 _nonce
+  ) public pure returns (bytes32) {
+    return keccak256(abi.encodePacked(_to, _amount, _message, _nonce));
+  }
 
-    /* 3. Sign message hash
+  /* 3. Sign message hash
     # using browser
     account = "copy paste account of signer here"
     ethereum.request({ method: "personal_sign", params: [account, hash]}).then(console.log)
@@ -49,15 +50,15 @@ contract VerifySignature {
     Signature will be different for different accounts
     0x993dab3dd...063e8f3f781b
     */
-    function getEthSignedMessageHash(bytes32 _messageHash) public pure returns (bytes32) {
-        /*
+  function getEthSignedMessageHash(bytes32 _messageHash) public pure returns (bytes32) {
+    /*
         Signature is produced by signing a keccak256 hash with the following format:
         "\x19Ethereum Signed Message\n" + len(msg) + msg
         */
-        return keccak256(abi.encodePacked("\x19Ethereum Signed Message:\n32", _messageHash));
-    }
+    return keccak256(abi.encodePacked("\x19Ethereum Signed Message:\n32", _messageHash));
+  }
 
-    /* 4. Verify signature
+  /* 4. Verify signature
     signer = 0xB273216C05A8c0D4F0a4Dd0d7Bae1D2EfFE636dd
     to = 0x14723A09ACff6D2A60DcdF7aA4AFf308FDDC160C
     amount = 123
@@ -66,34 +67,34 @@ contract VerifySignature {
     signature =
         0x993dab3dd91f5c6dc28e17...32dfe0a063e8f3f781b
     */
-    function verify(
-        address _signer,
-        address _to,
-        uint256 _amount,
-        string memory _message,
-        uint256 _nonce,
-        bytes memory signature
-    ) public pure returns (bool) {
-        bytes32 messageHash = getMessageHash(_to, _amount, _message, _nonce);
-        bytes32 ethSignedMessageHash = getEthSignedMessageHash(messageHash);
+  function verify(
+    address _signer,
+    address _to,
+    uint256 _amount,
+    string memory _message,
+    uint256 _nonce,
+    bytes memory signature
+  ) public pure returns (bool) {
+    bytes32 messageHash = getMessageHash(_to, _amount, _message, _nonce);
+    bytes32 ethSignedMessageHash = getEthSignedMessageHash(messageHash);
 
-        return recoverSigner(ethSignedMessageHash, signature) == _signer;
-    }
+    return recoverSigner(ethSignedMessageHash, signature) == _signer;
+  }
 
-    function recoverSigner(bytes32 _ethSignedMessageHash, bytes memory _signature) public pure returns (address) {
-        (bytes32 r, bytes32 s, uint8 v) = splitSignature(_signature);
+  function recoverSigner(bytes32 _ethSignedMessageHash, bytes memory _signature) public pure returns (address) {
+    (bytes32 r, bytes32 s, uint8 v) = splitSignature(_signature);
 
-        return ecrecover(_ethSignedMessageHash, v, r, s);
-    }
+    return ecrecover(_ethSignedMessageHash, v, r, s);
+  }
 
-    /* example sig (from chatgpt):
+  /* example sig (from chatgpt):
         bytes memory sig = hex"0100000000...000000000000DEADBEEF00000000000000000000000000000000CAFEBABE00000001"; 
         (r, s, v) = (DEADBEEF...00000000, CAFEBABE...00000001, 1)
     */
-    function splitSignature(bytes memory sig) public pure returns (bytes32 r, bytes32 s, uint8 v) {
-        require(sig.length == 65, "invalid signature length");
-        assembly {
-            /*
+  function splitSignature(bytes memory sig) public pure returns (bytes32 r, bytes32 s, uint8 v) {
+    require(sig.length == 65, "invalid signature length");
+    assembly {
+      /*
             First 32 bytes stores the length of the signature
 
             add(sig, 32) = pointer of sig + 32
@@ -102,14 +103,14 @@ contract VerifySignature {
             mload(p) loads next 32 bytes starting at the memory address p into memory
             */
 
-            // first 32 bytes, after the length prefix
-            r := mload(add(sig, 32))
-            // second 32 bytes
-            s := mload(add(sig, 64))
-            // final byte (first byte of the next 32 bytes)
-            v := byte(0, mload(add(sig, 96)))
-        }
-
-        // implicitly return (r, s, v)
+      // first 32 bytes, after the length prefix
+      r := mload(add(sig, 32))
+      // second 32 bytes
+      s := mload(add(sig, 64))
+      // final byte (first byte of the next 32 bytes)
+      v := byte(0, mload(add(sig, 96)))
     }
+
+    // implicitly return (r, s, v)
+  }
 }
