@@ -22,6 +22,7 @@
     "@nomicfoundation/hardhat-ethers": "^3.0.0",
     "@openzeppelin/contracts": "^5.0.2",
     "@openzeppelin/contracts-upgradeable": "^5.0.2",
+    "@openzeppelin/hardhat-upgrades": "^3.0.5",
     "@typechain/ethers-v5": "^11.1.2",
     "@typescript-eslint/parser": "^7.5.0",
     "cross-env": "^7.0.3",
