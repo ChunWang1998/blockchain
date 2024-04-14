@@ -8,8 +8,10 @@ const contractsName = {
   ERC20Permit: "ERC20Permit",
   GaslessTokenTransfer: "GaslessTokenTransfer",
   BuggyProxy: "BuggyProxy",
+  TestSlot: "TestSlot",
   CounterV1: "CounterV1",
   CounterV2: "CounterV2",
+  Proxy: "Proxy",
 };
 
 module.exports = { contractsName };
