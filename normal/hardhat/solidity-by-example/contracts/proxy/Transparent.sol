@@ -112,6 +112,7 @@ contract Proxy {
   }
 
   // 0xf851a440
+  // has a potential to call fallback function
   function admin() external ifAdmin returns (address) {
     return _getAdmin();
   }
@@ -187,6 +188,8 @@ contract ProxyAdmin {
   }
 
   function getProxyAdmin(address proxy) external view returns (address) {
+    // make it a read-only function
+    // (): no input to pass into admin()
     (bool ok, bytes memory res) = proxy.staticcall(abi.encodeCall(Proxy.admin, ()));
     require(ok, "call failed");
     return abi.decode(res, (address));
@@ -198,6 +201,7 @@ contract ProxyAdmin {
     return abi.decode(res, (address));
   }
 
+// payable: the proxy contract has a fallback function
   function changeProxyAdmin(address payable proxy, address admin) external onlyOwner {
     Proxy(proxy).changeAdmin(admin);
   }

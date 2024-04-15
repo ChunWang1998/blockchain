@@ -12,6 +12,7 @@ const contractsName = {
   CounterV1: "CounterV1",
   CounterV2: "CounterV2",
   Proxy: "Proxy",
+  ProxyAdmin:"ProxyAdmin"
 };
 
 module.exports = { contractsName };
