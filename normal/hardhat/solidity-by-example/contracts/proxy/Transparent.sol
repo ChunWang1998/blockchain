@@ -65,6 +65,7 @@ contract Proxy {
   // All functions / variables should be private, forward all calls to fallback
 
   // -1 for unknown preimage (prevent attack)
+  // if we don't -1, maybe can simply IMPLEMENTATION_SLOT = keccak256("eip1967.proxy.implementation")?
   // 0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc
   bytes32 private constant IMPLEMENTATION_SLOT = bytes32(uint256(keccak256("eip1967.proxy.implementation")) - 1);
   // 0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103
@@ -74,7 +75,8 @@ contract Proxy {
     _setAdmin(msg.sender);
   }
 
-  //execute proxy function or implementation function
+  // execute proxy function or implementation function
+  // the function modified by this will not be read-only function
   modifier ifAdmin() {
     if (msg.sender == _getAdmin()) {
       _;
@@ -123,6 +125,9 @@ contract Proxy {
   }
 
   // User interface //
+  // return data from fallback: https://www.youtube.com/watch?v=KGmV8-NdPgE&t=504s
+  // refer: https://docs.openzeppelin.com/upgrades-plugins/1.x/proxies
+  //
   function _delegate(address _implementation) internal virtual {
     assembly {
       // Copy msg.data. We take full control of memory in this inline assembly
@@ -131,6 +136,7 @@ contract Proxy {
 
       // calldatacopy(t, f, s) - copy s bytes from calldata at position f to mem at position t
       // calldatasize() - size of call data in bytes
+      // -> copy callData(0 ~ calldatasize()) into memory at memory 0
       calldatacopy(0, 0, calldatasize())
 
       // Call the implementation.
@@ -142,6 +148,7 @@ contract Proxy {
       // - providing g gas
       // - and output area mem[out…(out+outsize))
       // - returning 0 on error (eg. out of gas) and 1 on success
+      // -> store the delegatecall result to memory
       let result := delegatecall(gas(), _implementation, 0, calldatasize(), 0, 0)
 
       // Copy the returned data.
@@ -149,6 +156,7 @@ contract Proxy {
       // returndatasize() - size of the last returndata
       returndatacopy(0, 0, returndatasize())
 
+      // -> check the delegateCall is success
       switch result
       // delegatecall returns 0 on error.
       case 0 {
@@ -157,6 +165,7 @@ contract Proxy {
       }
       default {
         // return(p, s) - end execution, return data mem[p…(p+s))
+        // -> get the data stored in memory
         return(0, returndatasize())
       }
     }
@@ -201,7 +210,7 @@ contract ProxyAdmin {
     return abi.decode(res, (address));
   }
 
-// payable: the proxy contract has a fallback function
+  // payable: the proxy contract has a fallback payable function
   function changeProxyAdmin(address payable proxy, address admin) external onlyOwner {
     Proxy(proxy).changeAdmin(admin);
   }

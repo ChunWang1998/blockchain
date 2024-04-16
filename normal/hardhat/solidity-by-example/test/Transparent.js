@@ -17,11 +17,11 @@ describe("Transparent proxy", function () {
   let counterV2 = contractsName.CounterV2;
   let counterV2Instance;
 
-  let proxy = contractsName.Proxy
-  let proxyInstance
+  let proxy = contractsName.Proxy;
+  let proxyInstance;
 
-  let proxyAdmin = contractsName.ProxyAdmin
-  let proxyAdminInstance
+  let proxyAdmin = contractsName.ProxyAdmin;
+  let proxyAdminInstance;
 
   beforeEach(async function () {
     [signer, account1, account2] = await hre.ethers.getSigners();
@@ -72,20 +72,21 @@ describe("Transparent proxy", function () {
   it("Proxy Admin", async function () {
     await proxyInstance.upgradeTo(counterV1Instance.target);
 
-    await proxyInstance.changeAdmin(proxyAdminInstance.target)
+    await proxyInstance.changeAdmin(proxyAdminInstance.target);
 
-    expect(await proxyAdminInstance.getProxyAdmin(proxyInstance.target)).to.equal(proxyAdminInstance.target)
-    expect(await proxyAdminInstance.getProxyImplementation(proxyInstance.target)).to.equal(counterV1Instance.target)
+    expect(await proxyAdminInstance.getProxyAdmin(proxyInstance.target)).to.equal(proxyAdminInstance.target);
+    expect(await proxyAdminInstance.getProxyImplementation(proxyInstance.target)).to.equal(counterV1Instance.target);
 
     let counterV1WithProxyAddrInstance = await counterV1Instance.attach(proxyInstance.target);
-    await counterV1WithProxyAddrInstance.inc()
-    expect(await counterV1WithProxyAddrInstance.count()).to.equal(1)
+    // There is no inc() and count variable in the proxyInstance, so it will call to fallback -> delegateCall
+    await counterV1WithProxyAddrInstance.inc();
+    expect(await counterV1WithProxyAddrInstance.count()).to.equal(1);
 
-    await proxyAdminInstance.upgrade(proxyInstance.target, counterV2Instance.target)
+    await proxyAdminInstance.upgrade(proxyInstance.target, counterV2Instance.target);
     let counterV2WithProxyAddrInstance = await counterV2Instance.attach(proxyInstance.target);
-    await counterV2WithProxyAddrInstance.inc()
-    expect(await counterV2WithProxyAddrInstance.count()).to.equal(2)
-    await counterV2WithProxyAddrInstance.dec()
-    expect(await counterV2WithProxyAddrInstance.count()).to.equal(1)
+    await counterV2WithProxyAddrInstance.inc();
+    expect(await counterV2WithProxyAddrInstance.count()).to.equal(2);
+    await counterV2WithProxyAddrInstance.dec();
+    expect(await counterV2WithProxyAddrInstance.count()).to.equal(1);
   });
 });
