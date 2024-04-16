@@ -16,12 +16,12 @@
 // (Message can be sent via internet, such as email or chat)
 
 // 2. Bob send the msg to DAI contract by calling permit()
-// (permit() in ERC20Permit.sol: 
+// (permit() in ERC20Permit.sol:
 // sender approves GTT to spend amount + fee token,
-// without having call the function approved on the token contract. 
+// without having call the function approved on the token contract.
 // Amount will be sent to receiver, fee will be sent to executer)
 
-// 3. transferfrom() Alice to Bob 
+// 3. transferfrom() Alice to Bob
 
 // 3-1. the tx is executed by Bob, so Bob has to pay 0.2 eth gas fee
 
