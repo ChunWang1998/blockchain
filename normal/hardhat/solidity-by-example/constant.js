@@ -1,4 +1,6 @@
 const contractsName = {
+  ABIDecode: "AbiDecode",
+  ABIEncode: "AbiEncode",
   FunctionSelector: "FunctionSelector",
   CarFactory: "CarFactory",
   VerifySignature: "VerifySignature",
