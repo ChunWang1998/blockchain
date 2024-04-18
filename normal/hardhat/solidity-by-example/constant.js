@@ -17,6 +17,8 @@ const contractsName = {
   ProxyAdmin: "ProxyAdmin",
   DeployAnyContract: "DeployAnyContractProxy",
   Helper: "Helper",
+  EnglishAuction: "EnglishAuction",
+  MyNFT: "MyNFT",
 };
 
 module.exports = { contractsName };
