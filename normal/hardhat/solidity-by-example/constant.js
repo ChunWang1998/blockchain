@@ -19,6 +19,7 @@ const contractsName = {
   Helper: "Helper",
   EnglishAuction: "EnglishAuction",
   MyNFT: "MyNFT",
+  MultiCall: "MultiCall",
 };
 
 module.exports = { contractsName };
