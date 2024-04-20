@@ -20,6 +20,7 @@ const contractsName = {
   EnglishAuction: "EnglishAuction",
   MyNFT: "MyNFT",
   MultiCall: "MultiCall",
+  MinimalProxy: "MinimalProxy",
 };
 
 module.exports = { contractsName };
