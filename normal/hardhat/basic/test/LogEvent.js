@@ -28,3 +28,5 @@ describe("LogEvent", function () {
     expect(log.args.number).to.equal(42);
   });
 });
+
+// write another describe to test another contract
