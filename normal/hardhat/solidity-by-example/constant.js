@@ -20,6 +20,7 @@ const contractsName = {
   EnglishAuction: "EnglishAuction",
   MyNFT: "MyNFT",
   MultiCall: "MultiCall",
+  MultiDelegatecall: "MultiDelegatecall",
   MinimalProxy: "MinimalProxy",
 };
 
