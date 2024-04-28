@@ -1,8 +1,5 @@
 name: "CI"
 
-env:
-  HARDHAT_VAR_MNEMONIC: "test test test test test test test test test test test junk"
-  HARDHAT_VAR_INFURA_API_KEY: "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
 
 on:
   workflow_dispatch:
@@ -21,6 +18,11 @@ jobs:
       - name: "Install Bun"
         uses: "oven-sh/setup-bun@v1"
 
+      - name: "Read variable"
+        run: echo "My metamask account is ${{ vars.METAMASK_ACCOUNT }}"
+
+      - name: "Read secret"
+        run: echo "My metamask private key is ${{ vars.METAMASK_ACCOUNT_PRIVATE_KEY }}"
 
       - name: "Install dependencies and run lint"
         run: bun install && bun run lint
@@ -29,3 +31,9 @@ jobs:
       - name: "Generate TypeChain bindings (using defined script)"  
         run: bun run type 
         working-directory: normal/hardhat/solidity-by-example   
+        env: 
+          API_KEY: ${{ secrets.API_KEY }}"
+          METAMASK_ACCOUNT_PRIVATE_KEY: ${{ vars.METAMASK_ACCOUNT_PRIVATE_KEY }}"
+          METAMASK_ACCOUNT: ${{ vars.METAMASK_ACCOUNT }}"
+          INFURA_API_KEY: ${{ secrets.INFURA_API_KEY }}"
+          ALCHEMY_API_KEY: ${{ secrets.ALCHEMY_API_KEY }}"
